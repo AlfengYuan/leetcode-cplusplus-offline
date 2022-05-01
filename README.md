@@ -10,3 +10,6 @@
 
 ## LICENSE
 leetcode-cplusplus-offline is licensed under the MIT License, See the [LICENSE](./LICENSE) file for details.
+
+## REFERENCE
+- [鲤鱼笔记](https://blog.lichangao.com/daily_practice/leetcode/overview/question_summary.html)
