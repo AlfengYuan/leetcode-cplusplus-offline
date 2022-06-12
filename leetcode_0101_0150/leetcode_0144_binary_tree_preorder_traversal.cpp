@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include <stack>
 using namespace std;
 /**
  * Definition for a binary tree node. */
@@ -13,6 +14,7 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+#if 0
 class Solution {
     vector<int> result;
 public:
@@ -24,6 +26,31 @@ public:
             if(root->right) preorderTraversal(root->right);
         }
         return result;
+    }
+};
+#endif
+
+class Solution {
+    vector<int> result;
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        TreeNode *cur = root;
+        stack<TreeNode *> stk;
+
+        while(cur || !stk.empty())
+        {
+            while(cur)
+            {
+                stk.push(cur);
+                ans.push_back(cur->val);
+                cur = cur->left;
+            }
+            cur = stk.top(); stk.pop();
+            
+            cur = cur->right;
+        }
+        return ans;
     }
 };
 

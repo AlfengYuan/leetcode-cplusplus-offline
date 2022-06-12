@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <stack>
 using namespace std;
 struct TreeNode {
     int val;
@@ -12,6 +13,8 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
+#if 0
 class Solution {
     vector<int> result;
 public:
@@ -28,7 +31,31 @@ public:
 
     }
 };
+#endif
 
+class Solution {
+public:
+/*solution from [https://blog.lichangao.com/daily_practice/leetcode/overview/question_summary.html]*/
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        TreeNode *cur = root;
+        stack<TreeNode *> stk;
+
+        while(cur || !stk.empty())
+        {
+            while(cur)
+            {
+                stk.push(cur);
+                cur = cur->left;
+            }
+        
+            cur = stk.top(); stk.pop();
+            ans.push_back(cur->val);
+            cur = cur->right;
+        }
+        return ans;
+    }
+};
 int main(int argc, char *argv[])
 {
     TreeNode *root = new TreeNode(1);

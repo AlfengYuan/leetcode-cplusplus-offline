@@ -1,6 +1,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include <stack>
+#include <algorithm>
 using namespace std;
 /**
  * Definition for a binary tree node. */
@@ -12,6 +14,8 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
+#if 0
 class Solution {
     vector<int> result;
 public:
@@ -26,6 +30,33 @@ public:
         
         return result;
 
+    }
+};
+#endif
+
+class Solution {
+    vector<int> result;
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        TreeNode *cur = root;
+        stack<TreeNode *> stk;
+
+        while(cur || !stk.empty())
+        {
+            while(cur)
+            {
+                stk.push(cur);
+                ans.push_back(cur->val);
+                cur = cur->right;
+            }
+            cur = stk.top(); stk.pop();
+            
+            cur = cur->left;
+        }
+
+        reverse(ans.begin(), ans.end());
+        return ans;
     }
 };
 
