@@ -1,0 +1,11 @@
+## WEBSITES
+- [REDDIT](https://reddit.com/r/cpp)
+- [ISOCPP](https://isocpp.org)
+- [LEANPUB](https://leanpub.com)
+- [CPPINSIGHTS](https://www.cppinsights.io/)
+- [WG21](https://wg21.link/)
+- [EEL](https://eel.is/c++draft/)
+- [GCC.GODBOLT](https://gcc.godbolt.org)
+- [GODBOLT](https://godbolt.org)
+- [COMPILER-EXPLORER](https://compiler-explorer.com)
+- [CPPREFERENCE](https://cppreference.com)
