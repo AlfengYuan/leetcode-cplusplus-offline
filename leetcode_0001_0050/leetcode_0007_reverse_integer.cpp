@@ -1,68 +1,48 @@
-#include <iostream>
-#include <vector>
-using namespace std;
 class Solution {
 public:
     int reverse(int x) {
-        vector<int> resVec;
-        int res = 0;
-        int x_copy = x;
-        int flag = 1;
-        if(x_copy < 0) flag = -1; 
-        while(x_copy)
+        int result = 0;
+        string strmin = "2147483648";
+        int y = x;
+        if(x > 0) y *= -1;
+        string str = "";
+        while(y)
         {
-            resVec.push_back((x_copy % 10) * flag);
-            x_copy /= 10;
+            str += (-(y % 10) + '0');
+            y /= 10;
         }
-        if(!this->valideInt(resVec, x)) return 0;
-        for(int i = 0; i < resVec.size(); ++i)
+        
+        if(x > 0)
         {
-            res = res * 10 + resVec[i];
+            if(compare(strmin, str, true)) return 0;
+            for(int i = 0; i<str.length(); i++)
+            {
+                result *= 10;
+                result += str[i] - '0';
+            }
+            return result;
         }
-        if(x < 0) return res *= -1;
-        return res;
+        else if(x < 0){
+            if(compare(strmin, str, false)) return 0;
+            for(int i = 0; i<str.length(); i++)
+            {
+                result *= 10;
+                result += str[i] - '0';
+            }
+            return result*-1;
+        }
+
+        return 0;
     }
 
 private:
-    static bool valideInt(const vector<int> vec, int x)
+    bool compare(const std::string &str1, const std::string &str2, bool dflag)
     {
-        if(vec.size() > 10)
-        {
-            return false;
-        }
-        else if(vec.size() < 10)
-        {
-            return true;
-        }
-        else
-        {
-            vector<int> intMin = {2, 1, 4, 7, 4, 8, 3, 6, 4, 7};
-            if(x < 0) intMin[9] += 1;
-            for(int i = 0; i<10; i++)
-            {
-                if(vec[i] == intMin[i])
-                {
-                    continue;
-                }
-                else if(vec[i] < intMin[i])
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            return true;
+        if(str1.length() < str2.length()) return true;
+        else if(str1.length() > str2.length()) return false;
+        else{
+           if (dflag) return str1 <= str2;
+           else return str1 < str2;
         }
     }
 };
-
-int main(int argc, char *argv[])
-{
-    int x = -2147483648;
-    Solution solution = Solution();
-    int res = solution.reverse(x);
-    std::cout << res << std::endl;
-    return 0;
-}
