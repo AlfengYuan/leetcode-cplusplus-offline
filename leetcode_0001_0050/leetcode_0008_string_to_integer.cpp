@@ -1,85 +1,77 @@
-#include <cstring>
-#include <string>
-#include <iostream>
-#include <vector>
-
-using namespace std;
 class Solution {
 public:
     int myAtoi(string s) {
-        int i;
-        int res = 0;
-        for(i = 0; i<s.length(); i++)
-        {
-            if(s[i] != ' ') break;
-        }
-        if(s[i] != '+' && s[i] != '-' && !isdigit(s[i])) return 0;
-
+        string strs = step1(s);
         int flag = 1;
-        vector<int> intMin = {2, 1, 4, 7, 4, 8, 3, 6, 4, 7}; // 2^31 -1
-        vector<int> resV(0);
+        string result = "";
+        int ret = 0;
+        if(strs[0] != '+' && strs[0] != '-' && !isdigit(strs[0])) return 0;
+        string strmin = "2147483648";
+        int index = 0;
+        if(strs[0] == '-') {
+            flag *= -1;
+            index += 1;
+        }else if(strs[0] == '+'){
+            index += 1;
+        }
+
+        while(index < strs.length() && isdigit(strs[index]))
+        {
+            result += strs[index];
+            index++;
+        }
+
+        if (result == "") return 0;
+
+        int lasti = 0;
+        for(; lasti<result.length(); lasti++)
+        {
+            if(result[lasti] != '0') break;
+        }
+
+        if(lasti == result.length()) return 0;
+
+        string lastresult = result.substr(lasti, result.length() - lasti + 1);
         
-        if(s[i] == '-') flag = -1;
-        if(!isdigit(s[i])) i++;
-
-        while(i < s.length() && isdigit(s[i]) && s[i] == '0') i++; // filter zero from left
-        for(; i<s.length(); i++)
+        if(flag == 1)
         {
-            if(!isdigit(s[i])) break;
-            resV.push_back(s[i] - '0');
+            if(compare(strmin, lastresult, true)) return INT_MAX;
+            for(int i = 0; i<lastresult.length(); i++)
+            {
+                ret *= 10;
+                ret += lastresult[i] - '0';
+            }
+            return ret;
+        }
+        else if(flag == -1){
+            if(compare(strmin, lastresult, true)) return INT_MIN;
+            for(int i = 0; i<lastresult.length(); i++)
+            {
+                ret *= 10;
+                ret += lastresult[i] - '0';
+            }
+            return ret*-1;
         }
 
-        if(flag == -1) intMin[9] += 1; // 2^31
+        return 0;
+    }
 
-        if(resV.size() < 10)
-        {
-            for(i = 0; i<resV.size(); i++)
-            {
-                res = res * 10 + resV[i];
-            }
-            return res*flag;
+private:
+    string step1(string s)
+    {
+        int left = 0, right = s.length()-1;
+        while(left < s.length() && s[left] == ' ') left++;
+        while(right >= 0 && s[right] == ' ') right--;
+        return s.substr(left, right - left + 1);
+    }
+
+     bool compare(const std::string &str1, const std::string &str2, bool dflag)
+    {
+        if(str1.length() < str2.length()) return true;
+        else if(str1.length() > str2.length()) return false;
+        else{
+           if (dflag) return str1 <= str2;
+           else return str1 < str2;
         }
-        else if(resV.size() > 10)
-        {
-            if(flag == -1) return -2147483648;
-            else return 2147483647;
-        }
-        else
-        {
-            i = 0;
-            while(i < 10 && resV[i] == intMin[i]) i++;
-
-            if(i == 10)
-            {
-                if(flag == -1) return -2147483648;
-                else return 2147483647;
-            }
-            else
-            {
-                if(resV[i] > intMin[i])
-                {
-                    if(flag == -1) return -2147483648;
-                    else return 2147483647;
-                }
-                else
-                {
-                    for(i = 0; i < 10; i++)
-                    {
-                        res = res * 10 + resV[i];
-                    }
-                    return res*flag;
-                }
-
-            }
-        } 
     }
 };
-
-int main(int argc, char *argv[])
-{
-    string s = "-2147483648";
-    Solution solution = Solution();
-    int res = solution.myAtoi(s);
-    cout << res << endl;
-    return 0;
-}
