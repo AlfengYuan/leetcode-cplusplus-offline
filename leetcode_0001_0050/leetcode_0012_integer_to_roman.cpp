@@ -1,96 +1,64 @@
-#include <string>
-#include <iostream>
-using namespace std;
-
 class Solution {
 public:
     string intToRoman(int num) {
-        string res = "";
-        int tmp = num / 1000;
-        if(tmp > 0)
+        string result = "";
+        if(num >= 1000)
         {
-            res += string(tmp, 'M');
+            result += string(num / 1000, 'M');
+            num %= 1000;
         }
-        num %= 1000;
-        tmp = num / 100;
-        if(tmp == 9)
-        {
-            res += "CM";
+        if(num >= 900){
+            result += "CM";
+            num -= 900;
+        } 
+        if(num >= 500){
+            result += "D";
+            num -= 500;
         }
-        else if(tmp > 5)
-        {
-            res += "D";
-            res += string((tmp-5), 'C');
+        if(num >= 400){
+            result += "CD";
+            num -= 400;
         }
-        else if(tmp == 5)
-        {
-            res += "D";
+        if(num >= 100){
+            result += string(num / 100, 'C');
+            num %= 100;
         }
-        else if(tmp == 4)
-        {
-            res += "CD";
+        if(num >= 90){
+            result += "XC";
+            num -= 90;
         }
-        else if(tmp > 0)
-        {
-            res += string(tmp, 'C');
-           
+        if(num >= 50){
+            result += "L";
+            num -= 50;
         }
-        num %= 100;
-        tmp = num / 10;
-        if(tmp == 9)
-        {
-            res += "XC";
+        if(num >= 40){
+            result += "XL";
+            num -= 40;
         }
-        else if(tmp > 5)
-        {
-            res += "L";
-            res += string((tmp-5), 'X');
+        if(num >= 10){
+            result += string(num / 10, 'X');
+            num %= 10;
         }
-        else if(tmp == 5)
-        {
-            res += "L";
+        if(num >= 9){
+            result += "IX";
+            num -= 9;
         }
-        else if(tmp == 4)
-        {
-            res += "XL";
+        if(num >= 5){
+            result += "V";
+            num -= 5;
         }
-        else if(tmp > 0)
-        {
-            res += string(tmp, 'X');
-            
+        if(num >= 4){
+            result += "IV";
+            num -= 4;
         }
-        num %= 10;
-        tmp = num / 1;
-        if(tmp ==9)
-        {
-            res += "IX";
+        if(num >= 1){
+            result += string(num, 'I');
+            num %= 1;
         }
-        else if(tmp > 5)
-        {
-            res += "V";
-            res += string((tmp-5), 'I');
-        }
-        else if(tmp == 5)
-        {
-            res += "V";
-        }
-        else if(tmp == 4)
-        {
-            res += "IV";
-        }
-        else if(tmp > 0)
-        {
-            res += string(tmp, 'I');
-        }
-        return res;
+
+
+
+        return result;
+
     }
 };
-
-int main(int argc, char *argv[])
-{
-    int num = 1994;
-    Solution solution = Solution();
-    string res = solution.intToRoman(num);
-    cout << res << endl;
-    return 0;
-}

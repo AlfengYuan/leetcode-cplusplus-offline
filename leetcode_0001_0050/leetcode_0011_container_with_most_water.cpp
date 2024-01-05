@@ -1,37 +1,25 @@
-#include <vector>
-#include <iostream>
-
-using namespace std;
 class Solution {
 public:
     int maxArea(vector<int>& height) {
-        int res = -1;
-        int left = 0, right = height.size()-1;
-        while(left <= right)
-        {
-            int currArea = (right - left) * min(height[left], height[right]);
-            if(currArea > res) res = currArea;
-            if(height[left] <= height[right])
+        int left = 0, right = static_cast<int>(height.size() - 1);
+        int result = 0;
+        while(left >= 0 && right >= 0 && left < right && right < height.size()){
+            if(height[left] < height[right])
             {
+                int curr = (right - left) * height[left];
+                result = (curr > result ? curr : result);
+                cout << result << endl;
                 left++;
             }
-            else
-            {
+            else{
+                int curr = (right - left) * height[right];
+                result = (curr > result ? curr : result);
+                cout << result << endl;
                 right--;
             }
-
         }
 
-        return res;
+        return result;
 
     }
 };
-
-int main(int argc, char *argv[])
-{
-    vector<int> height = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-    Solution solution = Solution();
-    int res = solution.maxArea(height);
-    cout << res << endl;
-    return 0;
-}
