@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
 
     do{
         compare();
-    }while(next_permutation(a.begin(), a.end()));
+    }while(next_permutation(a.begin(), a.end())); //prev_permutation
 
     int res = 0;
 
