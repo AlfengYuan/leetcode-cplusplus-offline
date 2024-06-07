@@ -1,4 +1,5 @@
 # This repository for those who want pratice leetcode and want debug code by yourself on offline.
+#good luck!
 
 ## requirement
 - you must family with basic cpp knowledge
